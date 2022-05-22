@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+</html>
+<script>
+/*
+    平成14年 春期 基本情報技術者 午後 問04
+    をJSに書き換えたプログラム
+    変数名も出題された擬似言語を流用している
+*/
+
+var A = [3, 5, 8, 4, 0, 6, 9, 1, 2, 7];
+
+function QuickSort(A, Min, Max) {
+    var J = FindVivot(A, Min, Max);
+    if (J > -1) {
+        Pivot = A[J];
+        var K = Arrange(A, Min, Max, Pivot);
+        var L = K - 1;
+        QuickSort(A, Min, L);
+        QuickSort(A, K, Max);
+    }
+    return A;
+}
+
+function FindVivot(A, Min, Max) {
+    var Pivot = A[Min];
+    var K = Min + 1;
+    var Ret = -1;
+    var Found = false;
+    while (K <= Max && !Found) {
+        if (A[K] === Pivot) {
+            K = K + 1;
+        } else {
+            Found = true;
+            if (A[K] > Pivot) {
+                Ret = K;
+            } else {
+                Ret = Min;
+            }
+        }
+    }
+    return Ret
+}
+
+function Arrange(A, Min, Max, Pivot) {
+    var L = Min;
+    var R = Max;
+    while (L <= R) {
+        Tmp = A[L];
+        A[L] = A[R];
+        A[R] = Tmp;
+        while (A[L] < Pivot) {
+            L = L + 1;
+        }
+        while (A[R] >= Pivot) {
+            R = R -1;
+        }
+    }
+    return L;
+}
+
+window.onload = function() {
+    var result = QuickSort(A, 0, A.length -1);
+    console.log(result);
+}
+</script>
